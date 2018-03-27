@@ -12,6 +12,7 @@ if [ -z "$1" ]; then
   ERR_CODE=2 error "Missing parameter: directory"
 fi
 
+debug "Generating template in $1"
 mkdir -p "$1"
 cp -R "$GLOBAL"/. "$1"/.
 
