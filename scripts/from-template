@@ -1,0 +1,41 @@
+#!/bin/bash
+
+set -e
+
+###
+#
+##
+
+declare -r TEMPLATES_DIRECTORY="$( cd "$( dirname "${BASH_SOURCE[0]}" )"/.. && pwd )"
+
+from-template() {
+  # Validation
+  if [ -z "$1" ]; then
+    echo "Missing required parameter: template-dir" >&2
+    return 2
+  fi
+
+  if [ -z "$2" ]; then
+    echo "Missing required parameter: output-dir" >&2
+    return 2
+  fi
+
+  local _template="$TEMPLATES_DIRECTORY"/"$1"
+
+  if [ -d "$_template" ]; then
+    echo "Could not find a template for $1" >&2
+    return 3
+  fi
+
+  mkdir -p "$2"
+  cp -R "$_template"/. "$2"/.
+}
+
+if [ "${BASH_SOURCE[0]}" != "$0" ]; then
+  export -f from-template
+else
+  from-template "${@}"
+  exit $?
+fi
+
+# from-template

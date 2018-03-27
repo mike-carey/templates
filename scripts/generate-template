@@ -1,0 +1,28 @@
+#!/bin/bash
+
+set -e
+
+###
+#
+##
+
+declare -r TEMPLATES_GLOBAL_DIRECTORY="$( cd "$( dirname "${BASH_SOURCE[0]}" )"/.. && pwd )"/global
+
+generate-template() {
+  if [ -z "$1" ]; then
+    echo "Missing parameter: directory" >&2
+    return 2
+  fi
+
+  mkdir -p "$1"
+  cp -R "$GLOBAL"/. "$1"/.
+}
+
+if [ "${BASH_SOURCE[0]}" != "$0" ]; then
+  export -f generate-template
+else
+  from-template "${@}"
+  exit $?
+fi
+
+# generate-template
