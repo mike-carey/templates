@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+source "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"/.init.sh
+
+###
+#
+##
+
+GLOBAL="$( cd "$( dirname "${BASE_SOURCE[0]}" )" && pwd )"/global
+
+if [ -z "$1" ]; then
+  ERR_CODE=2 error "Missing parameter: directory"
+fi
+
+mkdir -p "$1"
+cp -R "$GLOBAL"/. "$1"/.
+
+# templates.generate
